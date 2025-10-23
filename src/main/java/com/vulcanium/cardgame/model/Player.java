@@ -1,6 +1,9 @@
 package com.vulcanium.cardgame.model;
 
+import lombok.Getter;
+
 public class Player {
+    @Getter
     private final String name;
     private final Hand hand;
 

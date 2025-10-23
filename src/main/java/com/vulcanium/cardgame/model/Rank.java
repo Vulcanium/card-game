@@ -20,5 +20,5 @@ public enum Rank {
     KING(13),
     ACE(14);
 
-    private final int rank;
+    private final int value;
 }

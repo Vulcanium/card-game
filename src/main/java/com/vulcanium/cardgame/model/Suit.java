@@ -11,5 +11,5 @@ public enum Suit {
     SPADES(3),
     CLUBS(4);
 
-    private final int suit;
+    private final int value;
 }
