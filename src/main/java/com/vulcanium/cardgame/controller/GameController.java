@@ -1,31 +1,36 @@
 package com.vulcanium.cardgame.controller;
 
+import com.vulcanium.cardgame.games.GameEvaluator;
 import com.vulcanium.cardgame.model.Deck;
 import com.vulcanium.cardgame.model.Player;
 import com.vulcanium.cardgame.model.PlayingCard;
-import com.vulcanium.cardgame.view.GameView;
+import com.vulcanium.cardgame.view.GameViewable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class GameController {
+
     private enum GameState {
-        AddingPlayers, CardsDealt, WinnerRevealed;
+        AddingPlayers, CardsDealt, WinnerRevealed
     }
 
-    private GameView view;
-    private Deck deck;
-    private List<Player> players;
+    private final GameViewable view;
+    private final Deck deck;
+    private final List<Player> players;
     private Player winner;
 
     private GameState gameState;
+    private final GameEvaluator gameEvaluator;
 
-    public GameController(GameView view, Deck deck) {
+    public GameController(Deck deck, GameViewable view, GameEvaluator gameEvaluator) {
         this.view = view;
         this.deck = deck;
         players = new ArrayList<>();
         gameState = GameState.AddingPlayers;
         view.setGameController(this);
+        this.gameEvaluator = gameEvaluator;
     }
 
     public void run() {
@@ -79,39 +84,16 @@ public class GameController {
         this.run();
     }
 
-    private void evaluateWinner() {
-        Player bestPlayer = null;
-        int bestRank = -1;
-        int bestSuit = -1;
-
-        for (Player player : players) {
-            boolean newBestPlayer = false;
-
-            if (bestPlayer == null) {
-                newBestPlayer = true;
-            } else {
-                PlayingCard card = player.getCardFromHand(0);
-                int thisRank = card.getRank().getValue();
-                if (thisRank >= bestRank) {
-                    if (thisRank > bestRank) {
-                        newBestPlayer = true;
-                    } else {
-                        if (card.getSuit().getValue() > bestSuit) {
-                            newBestPlayer = true;
-                        }
-                    }
-                }
-            }
-
-            if (newBestPlayer) {
-                bestPlayer = player;
-                PlayingCard card = player.getCardFromHand(0);
-                bestRank = card.getRank().getValue();
-                bestSuit = card.getSuit().getValue();
-            }
+    public void nextAction(String nextChoice) {
+        if (Objects.equals(nextChoice, "q")) {
+            exitGame();
+        } else {
+            startGame();
         }
+    }
 
-        winner = bestPlayer;
+    private void evaluateWinner() {
+        winner = gameEvaluator.evaluateWinner(players);
     }
 
     private void displayWinner() {
@@ -122,5 +104,9 @@ public class GameController {
         for (Player player : players) {
             deck.returnCardToDeck(player.removeCardFromHand());
         }
+    }
+
+    private void exitGame() {
+        System.exit(0);
     }
 }

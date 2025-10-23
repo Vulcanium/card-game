@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum Suit {
+    JOKER(0),
     DIAMONDS(1),
     HEARTS(2),
     SPADES(3),
