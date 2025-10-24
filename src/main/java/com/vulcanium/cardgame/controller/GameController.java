@@ -1,9 +1,7 @@
 package com.vulcanium.cardgame.controller;
 
 import com.vulcanium.cardgame.games.GameEvaluator;
-import com.vulcanium.cardgame.model.Deck;
-import com.vulcanium.cardgame.model.Player;
-import com.vulcanium.cardgame.model.PlayingCard;
+import com.vulcanium.cardgame.model.*;
 import com.vulcanium.cardgame.view.GameViewable;
 
 import java.util.ArrayList;
@@ -18,8 +16,8 @@ public class GameController {
 
     private final GameViewable view;
     private final Deck deck;
-    private final List<Player> players;
-    private Player winner;
+    private final List<IPlayer> players;
+    private IPlayer winner;
 
     private GameState gameState;
     private final GameEvaluator gameEvaluator;
@@ -56,7 +54,7 @@ public class GameController {
             deck.shuffle();
 
             int playerIndex = 1;
-            for (Player player : players) {
+            for (IPlayer player : players) {
                 player.addCardToHand(deck.removeTopCard());
                 view.showFaceDownCardForPlayer(playerIndex++, player.getName());
             }
@@ -69,7 +67,7 @@ public class GameController {
 
     public void flipCards() {
         int playerIndex = 1;
-        for (Player player : players) {
+        for (IPlayer player : players) {
             PlayingCard card = player.getCardFromHand(0);
             card.flip();
             view.showCardForPlayer(playerIndex++, player.getName(), card.getRank().toString(), card.getSuit().toString());
@@ -93,7 +91,7 @@ public class GameController {
     }
 
     private void evaluateWinner() {
-        winner = gameEvaluator.evaluateWinner(players);
+        winner = new WinningPlayer(gameEvaluator.evaluateWinner(players));
     }
 
     private void displayWinner() {
@@ -101,7 +99,7 @@ public class GameController {
     }
 
     private void rebuildDeck() {
-        for (Player player : players) {
+        for (IPlayer player : players) {
             deck.returnCardToDeck(player.removeCardFromHand());
         }
     }

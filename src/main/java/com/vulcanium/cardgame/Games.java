@@ -1,20 +1,41 @@
 package com.vulcanium.cardgame;
 
 import com.vulcanium.cardgame.controller.GameController;
-import com.vulcanium.cardgame.games.HighCardGameEvaluator;
-import com.vulcanium.cardgame.model.Deck;
-import com.vulcanium.cardgame.view.CommandLineView;
+import com.vulcanium.cardgame.games.GameEvaluatorFactory;
+import com.vulcanium.cardgame.games.GameEvaluatorFactory.GameEvaluatorType;
+import com.vulcanium.cardgame.model.DeckFactory;
+import com.vulcanium.cardgame.model.DeckFactory.DeckType;
+import com.vulcanium.cardgame.view.GameViewables;
+import com.vulcanium.cardgame.view.SwingPassiveView;
+import com.vulcanium.cardgame.view.SwingView;
 
 public class Games {
     public static void main(String[] args) {
 
         // Games with terminal display
-        GameController gameController = new GameController(new Deck(), new CommandLineView(), new HighCardGameEvaluator());
-        //GameController gameController = new GameController(new Deck(), new CommandLineView(), new LowCardGameEvaluator());
+        //GameController gameController = new GameController(DeckFactory.makeDeck(DeckType.Small), new CommandLineView(), GameEvaluatorFactory.makeGameEvaluator(GameEvaluatorType.Low));
+        //gameController.run();
 
         // Games with Swing display
-        //GameController gameController = new GameController(new Deck(), new SwingView(), new HighCardGameEvaluator());
-        //GameController gameController = new GameController(new Deck(), new SwingView(), new LowCardGameEvaluator());
+        //GameController gameController = new GameController(DeckFactory.makeDeck(DeckType.Normal), new SwingView(), GameEvaluatorFactory.makeGameEvaluator(GameEvaluatorType.High));
+        //gameController.run();
+
+        // Games with multiple Swing display
+        GameViewables views = new GameViewables();
+        views.addViewable(new SwingView());
+
+        for (int i = 0; i < 3; i++) {
+            views.addViewable(new SwingPassiveView());
+
+            // sleep to move new Swing frame on window
+            try {
+                Thread.sleep(2500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        GameController gameController = new GameController(DeckFactory.makeDeck(DeckType.Normal), views, GameEvaluatorFactory.makeGameEvaluator(GameEvaluatorType.High));
 
         gameController.run();
     }

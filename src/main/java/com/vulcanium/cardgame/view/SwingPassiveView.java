@@ -6,16 +6,16 @@ import lombok.Setter;
 import javax.swing.*;
 import java.awt.*;
 
-public class SwingView implements GameViewable {
+public class SwingPassiveView implements GameViewable {
     @Setter
     private GameController gameController;
     private JTextArea textArea;
     private JFrame frame;
 
-    public SwingView() {
+    public SwingPassiveView() {
 
         // create main frame
-        frame = new JFrame("Card Game");
+        frame = new JFrame("MVC-SOLID-Game");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 500);
 
@@ -71,31 +71,16 @@ public class SwingView implements GameViewable {
 
     @Override
     public void promptForPlayerName() {
-
-        String result = (String) JOptionPane.showInputDialog(frame, "Add a player", "Player",
-                JOptionPane.PLAIN_MESSAGE, null, null, "");
-
-        if (result == null || result.isEmpty()) {
-            gameController.nextAction("q");
-        }
-
-        gameController.addPlayer(result);
-
-        int addMore = JOptionPane.showConfirmDialog(frame, "Add more players ?", "More players", JOptionPane.YES_NO_OPTION);
-
-        if (addMore == JOptionPane.NO_OPTION) {
-            gameController.startGame();
-        }
+        appendText("Waiting for player name ...");
     }
 
     @Override
     public void promptForFlip() {
-        gameController.flipCards();
+        appendText("Waiting for flipping cards ...");
     }
 
     @Override
     public void promptForNewGame() {
-        int newGame = JOptionPane.showConfirmDialog(frame, "Play again ?", "Play again", JOptionPane.YES_NO_OPTION);
-        gameController.nextAction(newGame == JOptionPane.NO_OPTION ? "q" : "");
+        appendText("Waiting for next step ...");
     }
 }

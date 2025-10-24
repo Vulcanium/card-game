@@ -1,28 +1,11 @@
 package com.vulcanium.cardgame.model;
 
-import lombok.Getter;
-
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-@Getter
-public class Deck {
-    private final List<PlayingCard> cards;
-
-    public Deck() {
-        cards = new ArrayList<>();
-
-        for (Rank rank : Rank.values()) {
-            for (Suit suit : Suit.values()) {
-                System.out.println("Creating card [" + rank + "][" + suit + "]");
-                cards.add(new PlayingCard(rank, suit));
-            }
-        }
-
-        shuffle();
-    }
+public abstract class Deck {
+    protected List<PlayingCard> cards;
 
     public void shuffle() {
         Random random = new Random();

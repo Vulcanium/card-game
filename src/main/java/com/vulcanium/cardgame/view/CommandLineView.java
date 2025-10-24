@@ -1,18 +1,15 @@
 package com.vulcanium.cardgame.view;
 
 import com.vulcanium.cardgame.controller.GameController;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Scanner;
 
 public class CommandLineView implements GameViewable {
+    @Setter
     private GameController gameController;
     private final Scanner keyboard = new Scanner(System.in);
-
-    @Override
-    public void setGameController(GameController gameController) {
-        this.gameController = gameController;
-    }
 
     @Override
     public void promptForPlayerName() {
