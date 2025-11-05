@@ -1,8 +1,8 @@
 package com.vulcanium.cardgame;
 
 import com.vulcanium.cardgame.controller.GameController;
-import com.vulcanium.cardgame.games.GameEvaluatorFactory;
-import com.vulcanium.cardgame.games.GameEvaluatorFactory.GameEvaluatorType;
+import com.vulcanium.cardgame.controller.GameEvaluatorFactory;
+import com.vulcanium.cardgame.controller.GameEvaluatorFactory.GameEvaluatorType;
 import com.vulcanium.cardgame.model.DeckFactory;
 import com.vulcanium.cardgame.model.DeckFactory.DeckType;
 import com.vulcanium.cardgame.view.GameViewables;

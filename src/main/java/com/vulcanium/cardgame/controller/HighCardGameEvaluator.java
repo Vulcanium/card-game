@@ -1,7 +1,7 @@
-package com.vulcanium.cardgame.games;
+package com.vulcanium.cardgame.controller;
 
 import com.vulcanium.cardgame.model.IPlayer;
-import com.vulcanium.cardgame.model.PlayingCard;
+import com.vulcanium.cardgame.model.Card;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class HighCardGameEvaluator implements GameEvaluator {
             if (bestPlayer == null) {
                 newBestPlayer = true;
             } else {
-                PlayingCard card = player.getCardFromHand(0);
+                Card card = player.getCardFromHand(0);
                 int thisRank = card.getRank().getValue();
                 if (thisRank >= bestRank) {
                     if (thisRank > bestRank) {
@@ -34,7 +34,7 @@ public class HighCardGameEvaluator implements GameEvaluator {
 
             if (newBestPlayer) {
                 bestPlayer = player;
-                PlayingCard card = player.getCardFromHand(0);
+                Card card = player.getCardFromHand(0);
                 bestRank = card.getRank().getValue();
                 bestSuit = card.getSuit().getValue();
             }

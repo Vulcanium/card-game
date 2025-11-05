@@ -1,4 +1,4 @@
-package com.vulcanium.cardgame.games;
+package com.vulcanium.cardgame.controller;
 
 public class GameEvaluatorFactory {
 

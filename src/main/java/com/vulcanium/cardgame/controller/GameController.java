@@ -1,6 +1,5 @@
 package com.vulcanium.cardgame.controller;
 
-import com.vulcanium.cardgame.games.GameEvaluator;
 import com.vulcanium.cardgame.model.*;
 import com.vulcanium.cardgame.view.GameViewable;
 
@@ -68,7 +67,7 @@ public class GameController {
     public void flipCards() {
         int playerIndex = 1;
         for (IPlayer player : players) {
-            PlayingCard card = player.getCardFromHand(0);
+            Card card = player.getCardFromHand(0);
             card.flip();
             view.showCardForPlayer(playerIndex++, player.getName(), card.getRank().toString(), card.getSuit().toString());
         }

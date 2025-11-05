@@ -11,7 +11,7 @@ public class SmallDeck extends Deck {
             for (Suit suit : Suit.values()) {
                 if (rank.getValue() >= 7) {
                     System.out.println("Creating card [" + rank + "][" + suit + "]");
-                    cards.add(new PlayingCard(rank, suit));
+                    cards.add(new Card(rank, suit));
                 }
             }
         }

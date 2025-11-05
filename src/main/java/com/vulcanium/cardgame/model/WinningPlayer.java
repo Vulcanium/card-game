@@ -12,17 +12,17 @@ public class WinningPlayer implements IPlayer {
     }
 
     @Override
-    public void addCardToHand(PlayingCard card) {
+    public void addCardToHand(Card card) {
         winner.addCardToHand(card);
     }
 
     @Override
-    public PlayingCard getCardFromHand(int index) {
+    public Card getCardFromHand(int index) {
         return winner.getCardFromHand(index);
     }
 
     @Override
-    public PlayingCard removeCardFromHand() {
+    public Card removeCardFromHand() {
         return winner.removeCardFromHand();
     }
 }
